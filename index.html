@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ruang Dengar 2025 — Motivasi & Curhat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #0f172a;
+      --glass: rgba(255,255,255,0.06);
+      --accent-1: #7c3aed;
+      --accent-2: #06b6d4;
+      --muted: rgba(255,255,255,0.65);
+      --card-radius: 16px;
+      color-scheme: dark;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                  radial-gradient(900px 500px at 90% 90%, rgba(6,182,212,0.08), transparent),
+                  linear-gradient(180deg,var(--bg1) 0%, #071028 100%);
+      color: #eef2ff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px;
+    }
+    .container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
+
+    header{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+    .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:grid;place-items:center;font-weight:800}
+    .logo span{font-size:20px}
+    h1{margin:0;font-size:26px}
+    p.lead{margin:6px 0 20px;color:var(--muted)}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));backdrop-filter: blur(8px);border-radius:var(--card-radius);padding:18px;box-shadow: 0 6px 20px rgba(2,6,23,0.6);}
+
+    .moodbar{display:flex;gap:10px;margin-bottom:14px}
+    .mood{flex:1;padding:10px;border-radius:12px;text-align:center;cursor:pointer;user-select:none}
+    .mood small{display:block;color:var(--muted);font-size:12px}
+    .mood.active{outline:2px solid rgba(255,255,255,0.06);transform:translateY(-4px)}
+
+    .quote{font-size:18px;font-weight:600;line-height:1.3;margin-bottom:12px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+    textarea#curhat{width:100%;min-height:220px;border-radius:12px;padding:14px;background:transparent;border:1px dashed rgba(255,255,255,0.06);color:inherit;font-size:15px;resize:vertical}
+    .tools{display:flex;gap:8px;margin-top:12px;align-items:center}
+    .btn{padding:10px 12px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .small{font-size:13px;padding:8px 10px}
+
+    .right{position:sticky;top:32px}
+    .stats{display:flex;gap:10px;margin-top:12px}
+    .stat{flex:1;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));text-align:center}
+    .stat h3{margin:0;font-size:18px}
+    .stat p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+    .recent-list{margin-top:12px;display:grid;gap:10px}
+    .recent-item{padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent)}
+    .recent-item small{color:var(--muted)}
+
+    footer{grid-column:1/-1;margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr;}
+      .right{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div>
+      <header>
+        <div class="logo"><span>RD</span></div>
+        <div>
+          <h1>Ruang Dengar 2025</h1>
+          <p class="lead">Tempat curhat dengan kata-kata motivasi, teori psikologi, dan sedikit humor agar hati lega. Tulis ceritamu, unduh sebagai Word, atau kirim ke email yang telah disiapkan.</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="moodbar">
+          <div class="mood active" data-mood="hope">😊<small>Semangat</small></div>
+          <div class="mood" data-mood="sad">😔<small>Sedih</small></div>
+          <div class="mood" data-mood="angry">😤<small>Kesal</small></div>
+          <div class="mood" data-mood="calm">😌<small>Tenang</small></div>
+        </div>
+
+        <div class="quote" id="quote">"Hidup itu seperti Wi-Fi: kadang kuat, kadang lemah, tapi tetap harus tersambung."</div>
+        <div class="meta" id="quoteMeta">— Psikologi ringan & humor</div>
+
+        <textarea id="curhat" placeholder="Tulis ceritamu di sini... biarkan kata-katamu mengalir."></textarea>
+
+        <div class="tools">
+          <button class="btn small" id="saveLocal">Simpan Draft</button>
+          <button class="btn small ghost" id="clear">Bersihkan</button>
+          <button class="btn small" id="downloadDoc">Unduh sebagai Word</button>
+          <button class="btn small" id="sendMail">Kirim ke Gmail</button>
+          <div style="margin-left:auto;color:var(--muted);font-size:13px">Kata: <span id="wordCount">0</span></div>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:16px">
+        <h3 style="margin-top:0">Teori Psikologis & Humor</h3>
+        <p style="margin-bottom:8px;color:var(--muted)">Ringkasan teori psikologis + humor ringan untuk mencerahkan hari:</p>
+        <div style="display:grid;gap:10px">
+          <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"><strong>Kognitif-Perilaku</strong><div style="color:var(--muted);font-size:13px">Mengubah pola pikir dapat membantu mengubah emosi. Contoh: Jangan khawatir, bahkan Google butuh update.</div></div>
+          <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"><strong>Mindfulness</strong><div style="color:var(--muted);font-size:13px">Menerima perasaan tanpa menghakimi. Ingat, kopi tidak menjudge kamu kok.</div></div>
+          <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)"><strong>Self-Compassion</strong><div style="color:var(--muted);font-size:13px">Bersikap lembut pada diri sendiri. Jika gagal, bilang saja "oops, upgrade aja".</div></div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="right">
+      <div class="card">
+        <h3 style="margin-top:0">Ringkasan</h3>
+        <div class="stats">
+          <div class="stat"><h3 id="draftCount">0</h3><p>Draft tersimpan</p></div>
+          <div class="stat"><h3 id="sentCount">0</h3><p>Terkirim</p></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label style="font-size:13px;color:var(--muted)">Email tujuan</label>
+          <input id="toEmail" value="ruangdengar2025@gmail.com" style="width:100%;margin-top:8px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit" />
+        </div>
+
+        <div class="recent-list" id="recent">
+          <div style="font-size:13px;color:var(--muted)">Draft terbaru</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin-top:0">Quotes & Prompt</h3>
+        <div style="font-size:14px;margin-top:8px" id="promptArea">Butuh bantuan menulis? Coba: "Saya merasa..., karena..., yang saya butuhkan adalah..."</div>
+      </div>
+
+    </aside>
+
+    <footer>
+      Buat file HTML ini lalu hosting di GitHub Pages / Netlify untuk membuatnya dapat diakses publik. Email default sudah diarahkan ke ruangdengar2025@gmail.com.
+    </footer>
+  </div>
+
+  <script>
+    const curhat = document.getElementById('curhat');
+    const wordCount = document.getElementById('wordCount');
+    const saveLocal = document.getElementById('saveLocal');
+    const clearBtn = document.getElementById('clear');
+    const downloadDoc = document.getElementById('downloadDoc');
+    const sendMail = document.getElementById('sendMail');
+    const toEmail = document.getElementById('toEmail');
+    const recent = document.getElementById('recent');
+    const draftCount = document.getElementById('draftCount');
+    const sentCount = document.getElementById('sentCount');
+
+    let drafts = JSON.parse(localStorage.getItem('rd_drafts') || '[]');
+    let sent = parseInt(localStorage.getItem('rd_sent') || '0');
+    sentCount.textContent = sent;
+    refreshRecent();
+
+    function refreshRecent(){
+      recent.innerHTML = '<div style="font-size:13px;color:var(--muted)">Draft terbaru</div>';
+      drafts.slice().reverse().slice(0,6).forEach(d=>{
+        const el = document.createElement('div'); el.className='recent-item';
+        el.innerHTML = `<strong>${d.title||d.preview.slice(0,30)}</strong><div style='font-size:12px;color:var(--muted)'>${new Date(d.t).toLocaleString()}</div>`;
+        el.addEventListener('click',()=>{curhat.value = d.preview; updateCount();});
+        recent.appendChild(el);
+      });
+      draftCount.textContent = drafts.length;
+    }
+
+    function updateCount(){
+      const words = curhat.value.trim().split(/\s+/).filter(x=>x).length;
+      wordCount.textContent = words;
+    }
+    curhat.addEventListener('input', updateCount);
+    updateCount();
+
+    saveLocal.addEventListener('click',()=>{
+      const text = curhat.value.trim();
+      if(!text){alert('Tulis sesuatu dulu.');return}
+      drafts.push({t:Date.now(), preview:text.slice(0,800), title:text.split('\n')[0]||'Draft'});
+      localStorage.setItem('rd_drafts', JSON.stringify(drafts));
+      refreshRecent();
+      alert('Draft tersimpan di browser (localStorage).');
+    });
+
+    clearBtn.addEventListener('click',()=>{if(confirm('Bersihkan teks?')){curhat.value='';updateCount();}});
+
+    downloadDoc.addEventListener('click',()=>{
+      const title = (curhat.value.split('\n')[0]||'Curhat').replace(/[^a-z0-9\- ]/ig,'').slice(0,40) || 'curhat';
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>${title}</title></head><body><pre>${curhat.value}</pre></body></html>`;
+      const blob = new Blob([html], {type:'application/msword'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = title + '.doc'; document.body.appendChild(a); a.click(); a.remove();
+    });
+
+    sendMail.addEventListener('click',()=>{
+      const to = toEmail.value || 'ruangdengar2025@gmail.com';
+      const subject = encodeURIComponent('Curhat dari Ruang Dengar 2025');
+      const bodyPreview = curhat.value.slice(0,150);
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${subject}&body=${encodeURIComponent(curhat.value)}`;
+      window.open(gmailUrl,'_blank');
+      sent = sent + 1; localStorage.setItem('rd_sent', sent); sentCount.textContent = sent;
+    });
+
+    const moods = document.querySelectorAll('.mood');
+    const quotes = {
+      hope: [ ['Hidup itu seperti Wi-Fi: kadang kuat, kadang lemah, tapi tetap harus tersambung.','Humor & Psikologi'] ],
+      sad: [ ['Menangis boleh, tapi jangan lupa selfie dulu biar nggak lupa momen sedihnya 😂','Self-Compassion & Humor'] ],
+      angry: [ ['Amarah itu kayak notifikasi spam: lebih baik di-snooze aja.','Regulasi Emosi & Humor'] ],
+      calm: [ ['Tenang itu nikmat, seperti kopi tanpa deadline.','Mindfulness & Humor'] ]
+    };
+    moods.forEach(m=>m.addEventListener('click',()=>{
+      moods.forEach(x=>x.classList.remove('active')); m.classList.add('active');
+      const key = m.dataset.mood; const q = quotes[key][Math.floor(Math.random()*quotes[key].length)];
+      document.getElementById('quote').textContent = '"'+q[0]+'"';
+      document.getElementById('quoteMeta').textContent = '— '+q[1];
+    }));
+
+    setInterval(()=>{const v=curhat.value.trim(); if(v){localStorage.setItem('rd_autosave', v);}},30000);
+
+  </script>
+</body>
+</html>
